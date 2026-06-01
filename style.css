@@ -1,0 +1,481 @@
+/* 기본 스타일 - 구조 중심 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.todo-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.todo-header {
+  background-color: #672be0;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* 뷰 토글 스위치 스타일 */
+.view-toggle-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.view-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  overflow: visible;
+  padding: 0;
+  border: none;
+}
+
+/* 일간 모드 (기본) */
+.toggle-checkbox:not(:checked) ~ .toggle-slider {
+  background-color: #672be0;
+}
+
+/* 주간 모드 */
+.toggle-checkbox:checked ~ .toggle-slider {
+  background-color: #1e88e5;
+}
+
+.toggle-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.toggle-label.daily {
+  left: 6px;
+  opacity: 1;
+}
+
+.toggle-label.weekly {
+  right: 6px;
+  opacity: 0.5;
+}
+
+.toggle-checkbox:checked ~ .toggle-slider .toggle-label.daily {
+  opacity: 0.5;
+}
+
+.toggle-checkbox:checked ~ .toggle-slider .toggle-label.weekly {
+  opacity: 1;
+}
+
+/* 토글 슬라이더 버튼 */
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  background-color: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: left 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.toggle-checkbox:checked ~ .toggle-slider::after {
+  left: 63px;
+}
+
+.view-mode-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #672be0;
+  transition: color 0.3s ease;
+}
+
+/* 뷰 콘텐츠 */
+.view-content {
+  display: none;
+}
+
+.view-content.active {
+  display: block;
+}
+
+/* 주간 네비게이션 */
+.week-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.week-nav-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #672be0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.week-nav-btn:hover {
+  background-color: #f0e6ff;
+  border-color: #672be0;
+}
+
+.week-range {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 주간 그리드 */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 15px 12px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.week-day-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.week-day-item:hover {
+  border-color: #672be0;
+  background-color: #f0e6ff;
+}
+
+.week-day-item.active {
+  border-color: #672be0;
+  background-color: #e8dff5;
+  font-weight: 600;
+}
+
+.week-day-item.today {
+  border-color: #672be0;
+  background-color: #672be0;
+  color: white;
+}
+
+.week-day-name {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.week-day-item.today .week-day-name {
+  color: white;
+}
+
+.week-day-date {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.week-day-item.today .week-day-date {
+  color: white;
+}
+
+.week-day-count {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+.week-day-item.today .week-day-count {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-btn {
+  padding: 10px 20px;
+  background-color: #672be0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* 날짜 네비게이션 스타일 */
+.date-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.date-nav-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #672be0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.date-nav-btn:hover {
+  background-color: #f0e6ff;
+  border-color: #672be0;
+}
+
+.date-input {
+  padding: 10px 14px;
+  border: 2px solid #672be0;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  min-width: 160px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  background-color: white;
+  font-family: 'Pretendard', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.date-input:hover {
+  border-color: #8b4fd9;
+  box-shadow: 0 0 0 3px rgba(103, 43, 224, 0.1);
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #672be0;
+  box-shadow: 0 0 0 3px rgba(103, 43, 224, 0.15);
+  background-color: #fff;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.4) sepia(1) saturate(3) hue-rotate(240deg);
+  margin: 0;
+}
+
+/* 필터 탭 스타일 */
+.filter-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background-color: transparent;
+  color: #666;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* 전체 탭 */
+.filter-btn[data-filter="all"].active {
+  background-color: #E3F2FD;
+  color: #1E88E5;
+  border-bottom: 3px solid #1E88E5;
+}
+
+/* 진행중 탭 */
+.filter-btn[data-filter="doing"].active {
+  background-color: #FFF3E0;
+  color: #FB8C00;
+  border-bottom: 3px solid #FB8C00;
+}
+
+/* 완료 탭 */
+.filter-btn[data-filter="done"].active {
+  background-color: #E8F5E9;
+  color: #43A047;
+  border-bottom: 3px solid #43A047;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  gap: 15px;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.complete-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 완료된 TODO 스타일 */
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn,
+.delete-btn,
+.save-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  padding: 6px;
+  border: none;
+  background-color: transparent;
+}
+
+.edit-btn:hover {
+  opacity: 0.7;
+}
+
+.edit-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.delete-btn {
+  padding: 6px;
+  border: none;
+  background-color: transparent;
+}
+
+.delete-btn:hover {
+  opacity: 0.7;
+}
+
+.delete-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.save-btn {
+  background-color: #672be0;
+  color: white;
+  border-color: #672be0;
+}
+
+/* 편집 모드 스타일 */
+.todo-item.editing {
+  padding: 10px 20px;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #672be0;
+  border-radius: 4px;
+  font-size: 16px;
+}
